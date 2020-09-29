@@ -1,4 +1,7 @@
 import java.util.Scanner;
+import java.util.Arrays;
+import java.lang.Math.*;
+import java.util.Random; 
 
 public class FarmCalculator {
 	private static void percentageChangeInWater() {
@@ -15,7 +18,6 @@ public class FarmCalculator {
 		System.out.println("Last flock consumption: " + last);
 		System.out.println("Current flock consumption: " + current);
 		System.out.println("Percentage-change in water: " + percentageChange + "%");
-
 	}
 
 	private static void avgWaterConsumptionInAllHouses() {
@@ -47,40 +49,77 @@ public class FarmCalculator {
 	}
 
 	private static void avgCullRate() {
+		Scanner reader = new Scanner(System.in);
 		System.out.println("Enter total # of houses:");
-		var totalHouses = 0;
-		var someArbitraryHouse = 0;
-		System.out.println("Enter total chickens in house " + someArbitraryHouse + ":");
-		System.out.println("Enter total culled chickens in house " + someArbitraryHouse + ":");
-		var someCalculatedCullRate = 0;
-		System.out.println("Cull rate for house " + someArbitraryHouse + ":" + someCalculatedCullRate);
-		var avgCullRate = 0;
-		System.out.println("Average cull rate for ALL " + totalHouses + " houses: " + avgCullRate);
+		int housenum = reader.nextInt();
+		int myArray[] = new int[housenum];
+		for(int i= 0; i < housenum; i++){
+		System.out.println("Enter total chickens in house " + (i+1) + ":");
+		int chicktot = reader.nextInt();
+		System.out.println("Enter total culled chickens in house " + (i+1) + ":");
+		int totcull = reader.nextInt();
+		int avgcull = (chicktot + totcull) / 2;
+		System.out.println("Cull rate for house " + (i+1) + ":" + avgcull);
+		myArray[i] = avgcull; 
+		}
+		int total = 0;
+		for(int i= 0; i < housenum; i++){
+			total = total + myArray[i];
+		}
+		int totavg = total / housenum;
+		System.out.println("Average cull rate for ALL " + housenum + " houses: " + totavg);
 	}
 
 	private static void farmMeasurements() {
+		Scanner reader = new Scanner(System.in);
 		System.out.println("Enter length of a house:");
+		double houseleng = reader.nextInt();
 		System.out.println("Enter width of a house:");
-		double area = 0;
-		System.out.println("Area of house is: " + area);
+		double housewid = reader.nextInt();
+		double housearea = houseleng * housewid;
+		System.out.println("Area of house is: " + housearea);
 
 		System.out.println("Enter radius of feed cylinder:");
+		double cylrad = reader.nextInt();
 		System.out.println("Enter height of feed cylinder:");
-		double volume = 0;
-		System.out.println("Volume of feed cylinder is: " + volume);
+		double cylheight = reader.nextInt();
+		double cylvol = (Math.PI * cylrad * cylrad) * cylheight;
+		System.out.println("Volume of feed cylinder is: " + cylvol);
 	}
 
 	private static void comparePerformance() {
+		Random rand = new Random(); 	
+		Scanner reader = new Scanner(System.in);
+ 
 		System.out.println("Enter total # of houses:");
-		var totalHouses = 0;
-		System.out.println("Generating random water consumption values for " + totalHouses + " houses...");
+		int houseNumb = reader.nextInt();
+		
+		int[] myArray1 = new int[houseNumb];
+		for(int i= 0; i < houseNumb; i++) {
+		System.out.println("Generating random water consumption values for " + (i+1) + " houses...");
+			int rand_int = rand.nextInt(900);
+			myArray1[i] = rand_int;
+		}
+		
+		int[] myArray2 = new int[houseNumb];
+		for(int i= 0; i < houseNumb; i++) {
+		System.out.println("Enter current flock water consumption for house " + (i+1) + ":");
+			int flockComp = reader.nextInt();
+			myArray2[i] = flockComp;
+		}
 
-		var someArbitraryHouse = 0;
-		System.out.println("Enter current flock water consumption for house " + someArbitraryHouse + ":");
-
-		System.out.println("Current flock water consumption is > previous flock for house " + someArbitraryHouse + ":");
-		System.out.println("Current flock water consumption is < previous flock for house " + someArbitraryHouse + ":");
-		System.out.println("Current flock water consumption is = previous flock for house " + someArbitraryHouse + ":");
+		 for (int i = 0; i < houseNumb;) {
+		 	if (myArray2[i] == myArray1[i]) {
+		 		System.out.println("Current flock water consumption is = previous flock for house " + (i + 1) + ":");
+		 		i++;
+		 	} else if (myArray2[i] > myArray1[i]) {
+		 		System.out.println("Current flock water consumption is > previous flock for house " + (i + 1) + ":");
+		 		i++;
+		 	} else if (myArray2[i] < myArray1[i]) {
+		 		System.out.println("Current flock water consumption is < previous flock for house " + (i + 1) + ":");
+		 		i++;
+		 	}
+		 }
 	}
 
 	public static void main(String[] args) {
